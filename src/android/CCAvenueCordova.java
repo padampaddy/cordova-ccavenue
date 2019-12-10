@@ -1,28 +1,39 @@
-public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransactionCallBack {
+package com.espranza.ccavenue.cordova;
+
+
+import android.os.Bundle;
+import android.util.Log;
+
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaWebView;
+import org.json.JSONArray;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CallbackContext;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.ccavenue.indiasdk.AvenueOrder;
+import com.ccavenue.indiasdk.AvenuesApplication;
+import com.ccavenue.indiasdk.AvenuesTransactionCallback;
+
+
+public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransactionCallback {
 
     private static final String TAG = "CCAvenueCordovaPlugin" ;
 
-    private HashMap<String, CallbackContext> contextHashMap;
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        Log.v(TAG, "initialize(): cordova = "+cordova +", webView = "+webView );
-        contextHashMap = new HashMap<>();
     }
-
     @Override
-    public boolean execute( final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         Log.i(TAG, "execute(): "+action +", args = "+args );
 
         switch ( action ){
             case  "showPaymentView":
                 Log.d( TAG, "to showPaymentView()" );
                 final JSONObject paymentJsonObject = args.getJSONObject(0);
-                cordova.getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        launchPayUMoneyFlow(paymentJsonObject, callbackContext);
-                    }
-                });
+                cordova.getActivity().runOnUiThread(() -> launchPayUMoneyFlow(paymentJsonObject, callbackContext));
 
                 return true;
                 
@@ -30,7 +41,7 @@ public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransaction
                 try {
                     final String orderDetails = args.getString(0);
                     Log.d( TAG, "setOrderDetails(): setting orderDetails to " +orderDetails );
-                    setOrderDetails( orderDetails, callbackContext );
+//                    setOrderDetails( orderDetails, callbackContext );
                 } catch ( Exception e) {
                     e.printStackTrace();
                     callbackContext.error( e.getMessage() );
@@ -43,7 +54,7 @@ public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransaction
     }
 
 
-    private void launchPayUMoneyFlow( final JSONObject jsonObject , final CallbackContext callbackContext){
+    private void launchPayUMoneyFlow(final JSONObject jsonObject , final CallbackContext callbackContext){
 
         Log.d(TAG, "launchCCAvenueMoneyFlow(): "+jsonObject );
         try {
@@ -78,7 +89,7 @@ public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransaction
             orderDetails.setMerchant_param1(jsonObject.getString( "merchantData")); //total 5 parameters
             orderDetails.setMobileNo(jsonObject.getString( "mobileNo"));
             orderDetails.setPaymentEnviroment(jsonObject.getString( "appEnvironment"));
-            AvenuesApplication.startTransaction(this, orderDetails);
+            AvenuesApplication.startTransaction(cordova.getContext(), orderDetails);
         }catch ( Exception e){
             e.printStackTrace();
             callbackContext.error( e.getMessage() );
@@ -86,6 +97,20 @@ public class CCAvenueCordova extends CordovaPlugin implements AvenuesTransaction
 
     }
 
+    @Override
+    public void onTransactionResponse(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onErrorOccurred(String s) {
+
+    }
+
+    @Override
+    public void onCancelTransaction() {
+
+    }
 }
 
 
