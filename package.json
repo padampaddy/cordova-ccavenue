@@ -1,0 +1,17 @@
+{
+  "name": "com.espranza.ccavenue.cordova",
+  "version": "1.0.0",
+  "description": "CCAvenue Plugin",
+  "cordova": {
+    "id": "com.espranza.ccavenue.cordova",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Espranza Innovations Pvt Ltd",
+  "license": "Apache 2.0"
+}

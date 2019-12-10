@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.espranza.ccavenue.cordova" version="1.0.0">
+
+    <name>CCAvenue Cordova</name>
+    <js-module name="CCAvenue Cordova" src="www/CCAvenuePlugin.js">
+        <clobbers target="cordova.plugins.CCAvenue" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="CCAvenueCordova">
+                <param name="android-package" value="com.espranza.ccavenue.cordova.CCAvenueCordova" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" mode="merge">
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </edit-config>
+
+        <source-file src="src/android/CCAvenueCordova.java" target-dir="src/com/espranza/ccavenue/cordova/" />
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+        <lib-file src="src/android/libs/indiasdk.aar"/>
+    </platform>
+</plugin>
