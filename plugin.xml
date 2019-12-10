@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.espranza.ccavenue.cordova" version="1.0.0">
+    id="com.espranza.ccavenue.cordova" version="1.1.0">
 
     <name>CCAvenue Cordova</name>
     <js-module name="CCAvenue Cordova" src="www/CCAvenuePlugin.js">
