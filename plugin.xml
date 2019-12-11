@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.espranza.ccavenue.cordova" version="1.1.0">
+    id="com.espranza.ccavenue.cordova" version="1.2.0">
 
     <name>CCAvenue Cordova</name>
     <js-module name="CCAvenue Cordova" src="www/CCAvenuePlugin.js">
@@ -20,7 +20,9 @@
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         </edit-config>
-
+        <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
+            <activity android:name="com.espranza.ccavenue.cordova.CCAvenueActivity" />
+        </edit-config>
         <source-file src="src/android/CCAvenueCordova.java" target-dir="src/com/espranza/ccavenue/cordova/" />
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
         <lib-file src="src/android/libs/indiasdk.aar"/>
